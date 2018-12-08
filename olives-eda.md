@@ -1,6 +1,6 @@
 ---
 title: EDA
-notebook: olives-eda.ipynb
+notebook: eda_milestone3.ipynb
 nav_include: 1
 ---
 
@@ -8,6 +8,28 @@ nav_include: 1
 {:.no_toc}
 *  
 {: toc}
+
+## Data Collection
+### Data Sources and Description
+The data is obtained from two data sources:
+1. Million Playlist Dataset (http://recsys-challenge.spotify.com)
+
+The data is released from Spotify Lab in early 2018, created by Spotify users between January 2010 and November 2017,
+intend to enable playlist research at scale and it represents the largest dataset of music playlists in the world. The MPD was sampled from over 2 billion public playlists on Spotify, and it consists of over 2 million unique tracks by nearly 300,000 artists. In this project, 1 million playlists was used to create the recommendation model, which is about 5.4GB. In each file, there are multiple playlists. Within each playlist, it lists all the tracks in the playlist along with track details such as artists information and Spotify track URIs.
+
+2. Spotify API
+In order to get more details on the track than what is provided in the MPD, Spotify API is leveraged. From Spotify API, two pieces of information will be obtained. 1. the popularity score of each track 2. Spotify-derived audio features for each track (i.e. danceability and energy)
+
+### Data Conciliation
+The MPD provides spotify URIs for tracks within each playlist. The individual spotify URI is then used to make Spotify API requests. The merge of the API results and the MPD is then used for EDA and Model.
+
+Sample dataframe:
+
+```python
+df = pd.read_csv("notebooks/sample.csv")
+df.head()
+```
+
 
 
 
