@@ -1,6 +1,8 @@
 ---
-title: Automatic Playlist Recommender Overview
+title: Overview
 ---
+
+# Automatic Playlist Recommender
 
 ## Project Statement
 Any online buying experience can be enhanced by providing relevant and useful recommendations to the end user. Music streaming platforms are no exception to this. Giving an appropriate recommendation playlist can not only increase the customer engagement but also improve retention and profitability.

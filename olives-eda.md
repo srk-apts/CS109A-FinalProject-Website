@@ -12,12 +12,13 @@ nav_include: 1
 ## Data Collection
 ### Data Sources and Description
 The data is obtained from two data sources:
-1. Million Playlist Dataset (http://recsys-challenge.spotify.com)
+- Million Playlist Dataset (http://recsys-challenge.spotify.com)
 
 The data is released from Spotify Lab in early 2018, created by Spotify users between January 2010 and November 2017,
 intend to enable playlist research at scale and it represents the largest dataset of music playlists in the world. The MPD was sampled from over 2 billion public playlists on Spotify, and it consists of over 2 million unique tracks by nearly 300,000 artists. In this project, 1 million playlists was used to create the recommendation model, which is about 5.4GB. In each file, there are multiple playlists. Within each playlist, it lists all the tracks in the playlist along with track details such as artists information and Spotify track URIs.
 
-2. Spotify API
+- Spotify API
+
 In order to get more details on the track than what is provided in the MPD, Spotify API is leveraged. From Spotify API, two pieces of information will be obtained. 1. the popularity score of each track 2. Spotify-derived audio features for each track (i.e. danceability and energy)
 
 ### Data Conciliation
@@ -29,6 +30,244 @@ Sample dataframe:
 df = pd.read_csv("notebooks/sample.csv")
 df.head()
 ```
+<div>
+<style>
+    .dataframe thead tr:only-child th {
+        text-align: right;
+    }
+
+    .dataframe thead th {
+        text-align: left;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>album_name</th>
+      <th>album_uri</th>
+      <th>artist_name</th>
+      <th>artist_uri</th>
+      <th>collaborative</th>
+      <th>description</th>
+      <th>duration_ms</th>
+      <th>modified_at</th>
+      <th>name</th>
+      <th>num_albums</th>
+      <th>num_artists</th>
+      <th>num_edits</th>
+      <th>num_followers</th>
+      <th>num_tracks</th>
+      <th>pid</th>
+      <th>pos</th>
+      <th>track_name</th>
+      <th>track_uri</th>
+      <th>popularity</th>
+      <th>acousticness</th>
+      <th>analysis_url</th>
+      <th>danceability</th>
+      <th>track_duration_ms</th>
+      <th>energy</th>
+      <th>instrumentalness</th>
+      <th>key</th>
+      <th>liveness</th>
+      <th>loudness</th>
+      <th>mode</th>
+      <th>speechiness</th>
+      <th>tempo</th>
+      <th>time_signature</th>
+      <th>valence</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <th>Exis</th>
+      <th>2vnPwMLtMXZWGkKsoylsGt</th>
+      <th>Roy Woods</th>
+      <th>7mDU6nMUJnOSY2Hkjz5oqM</th>
+      <th>False</th>
+      <th>nan</th>
+      <th>5030548</th>
+      <th>1506384000</th>
+      <th>mood</th>
+      <th>14</th>
+      <th>11</th>
+      <th>16</th>
+      <th>1</th>
+      <th>23</th>
+      <th>440000</th>
+      <th>0</th>
+      <th>Go Go Go</th>
+      <th>21bl9jnt8gKltnNYpOPbhw</th>
+      <th>47.0</th>
+      <th>0.209</th>
+      <th>https://api.spotify.com/v1/audio-analysis/21bl9jnt8gKltnNYpOPbhw</th>
+      <th>0.637</th>
+      <th>245626</th>
+      <th>0.365</th>
+      <th>1.06e-05</th>
+      <th>0</th>
+      <th>.0944</th>
+      <th>-11.274000000000001</th>
+      <th>1</th>
+      <th>0.0743</th>
+      <th>77.958</th>
+      <th>4</th>
+      <th>0.0459</th>
+    </tr>
+    <tr>
+      <th>1</th>
+      <th>Hold On/Night Moves</th>
+      <th>1qOe0cNJmiMHdDiChatmFV</th>
+      <th>Roosevelt</th>
+      <th>4AQrqVz6BYwy29iMxcGtx7</th>
+      <th>False</th>
+      <th>nan</th>
+      <th>30082331</th>
+      <th>1495497600</th>
+      <th>costa rica</th>
+      <th>108</th>
+      <th>95</th>
+      <th>79</th>
+      <th>4</th>
+      <th>118</th>
+      <th>440353</th>
+      <th>86</th>
+      <th>Hold On</th>
+      <th>2Mdw2rZMq0oFK3oDCbUZQz</th>
+      <th>0.0</th>
+      <th>0.0205</th>
+      <th>https://api.spotify.com/v1/audio-analysis/2Mdw2rZMq0oFK3oDCbUZQz</th>
+      <th>0.691</th>
+      <th>206667</th>
+      <th>0.693</th>
+      <th>0.47</th>
+      <th>4</th>
+      <th>0.26899999999999996</th>
+      <th>-7.647</th>
+      <th>1</th>
+      <th>0.0426</th>
+      <th>114.23899999999999</th>
+      <th>4</th>
+      <th>0.815</th>
+    </tr>
+    <tr>
+      <th>2</th>
+      <th>What Do You Think About the Car?</th>
+      <th>3HJiLDJgWA9Z0MvCxlzHYQ</th>
+      <th>Declan McKenna</th>
+      <th>2D4FOOOtWycb3Aw9nY5n3c</th>
+      <th>False</th>
+      <th>nan</th>
+      <th>44201804</th>
+      <th>1504569600</th>
+      <th>heart strings</th>
+      <th>174</th>
+      <th>146</th>
+      <th>120</th>
+      <th>15</th>
+      <th>188</th>
+      <th>440188</th>
+      <th>158</th>
+      <th>Brazil</th>
+      <th>4sNG6zQBmtq7M8aeeKJRMQ</th>
+      <th>65.0</th>
+      <th>0.0941</th>
+      <th>https://api.spotify.com/v1/audio-analysis/4sNG6zQBmtq7M8aeeKJRMQ</th>
+      <th>0.687</th>
+      <th>252307</th>
+      <th>0.617</th>
+      <th>1.32e-05</th>
+      <th>4</th>
+      <th>0.0898</th>
+      <th>-5.212999999999999</th>
+      <th>1</th>
+      <th>0.0287</th>
+      <th>121.08</th>
+      <th>4</th>
+      <th>0.665</th>
+    </tr>
+    <tr>
+      <th>3</th>
+      <th>Reach For Glory</th>
+      <th>0XHpO9qTpqJJQwa2zFxAAE</th>
+      <th>Blackmill</th>
+      <th>4kjWnaLfIRcLJ1Dy4Wr6tY</th>
+      <th>False</th>
+      <th>nan</th>
+      <th>13610945</th>
+      <th>1419811200</th>
+      <th>Wub Wub</th>
+      <th>31</th>
+      <th>24</th>
+      <th>12</th>
+      <th>1</th>
+      <th>49</th>
+      <th>440253</th>
+      <th>39</th>
+      <th>In The Night Of Wilderness</th>
+      <th>3RZzg8yZs5HaRjQiDiBIsV</th>
+      <th>40.0</th>
+      <th>0.00233</th>
+      <th>https://api.spotify.com/v1/audio-analysis/3RZzg8yZs5HaRjQiDiBIsV</th>
+      <th>0.5489999999999999</th>
+      <th>327004</th>
+      <th>0.789</th>
+      <th>0.5579999999999999</th>
+      <th>4</th>
+      <th>0.244</th>
+      <th>-7.553</th>
+      <th>0</th>
+      <th>0.0315</th>
+      <th>140.026</th>
+      <th>4</th>
+      <th>0.0705</th>
+    </tr>
+    <tr>
+      <th>4</th>
+      <th>I Can't Stop the Feeling (When You Keep Dancing Just So Good)</th>
+      <th>0LMRJHZy2pnBehLHYRU5cO</th>
+      <th>I Can't Breathe</th>
+      <th>5MK9x0RbHMQFGDAknCMVeF</th>
+      <th>False</th>
+      <th>nan</th>
+      <th>25995379</th>
+      <th>1508371200</th>
+      <th>music</th>
+      <th>105</th>
+      <th>89</th>
+      <th>55</th>
+      <th>1</th>
+      <th>113</th>
+      <th>440266</th>
+      <th>54</th>
+      <th>Can't Stop the Feeling</th>
+      <th>0zmXotS8KeYXR3zMT0SQWm</th>
+      <th>25.0</th>
+      <th>0.0532</th>
+      <th>https://api.spotify.com/v1/audio-analysis/0zmXotS8KeYXR3zMT0SQWm</th>
+      <th>0.679</th>
+      <th>232859</th>
+      <th>0.725</th>
+      <th>0.000324</th>
+      <th>6</th>
+      <th>0.34299999999999997</th>
+      <th>-7.952999999999999</th>
+      <th>1</th>
+      <th>0.04</th>
+      <th>116.354</th>
+      <th>4</th>
+      <th>0.917</th>
+    </tr>
+  </tbody>
+</table>
+</div>
 
 
 
