@@ -11,16 +11,3 @@ Music Recommender Systems come with their own nuances depending on the sequence 
 1. Automatic Playlist Generation - Create a recommender system using the model that most accurately identifies songs for given playlists based on various attributes in the dataset, such as artist names, track category, etc.
 2. Cold Start Problem - Create an initial playlist from few playlist items.
 3. Develop a business strategy based on the machine learning techniques and findings from above models to best improve customer satisfaction.
-
-
-This is the home page
-
-## Lets have fun
-
->here is a quote
-
-Here is *emph* and **bold**.
-
-Here is some inline math $\alpha = \frac{\beta}{\gamma}$ and, of-course, E rules:
-
-$$ G_{\mu\nu} + \Lambda g_{\mu\nu}  = 8 \pi T_{\mu\nu} . $$
