@@ -19,7 +19,9 @@ intend to enable playlist research at scale and it represents the largest datase
 
 - Spotify API
 
-In order to get more details on the track than what is provided in the MPD, Spotify API is leveraged. From Spotify API, two pieces of information will be obtained. 1. the popularity score of each track 2. Spotify-derived audio features for each track (i.e. danceability and energy)
+In order to get more details on the track than what is provided in the MPD, Spotify API is leveraged. From Spotify API, two pieces of information will be obtained:
+1. the popularity score of each track 
+2. Spotify-derived audio features for each track (i.e. danceability and energy)
 
 ### Data Conciliation
 The MPD provides spotify URIs for tracks within each playlist. The individual spotify URI is then used to make Spotify API requests. The merge of the API results and the MPD is then used for EDA and Model. Some duplicated columns like type and track_href are dropped.
@@ -290,6 +292,7 @@ sns.pairplot(df[['num_albums', 'num_artists', 'num_edits', 'num_followers', 'num
             hue='collaborative', plot_kws={'alpha': 0.3})
 ```
 ![png](olives-eda_files/figure1.png)
+*Figure 1*
 
 Figure 2 gives the scatter plot matrix between all the averaged columns such as avg. number of tracks per playlist/edits and so on. This is basically to give us the average spread out of the number of tracks over various variables. We see similar observation as for the collaborative playlists but no longer see the correlations as in Figure 1.
 ```
@@ -297,6 +300,7 @@ sns.pairplot(df[['avg_dur_per_track', 'avg_tracks_per_artist', 'avg_tracks_per_a
              hue='collaborative', plot_kws={'alpha': 0.3})
 ```
 ![png](olives-eda_files/figure2.png)
+*Figure 2*
 
 Figure 3 & 4 show the distributions of the same numerical fields used in Figure 1 & 2. We can see that non-collaborative playlists have more variance for average number of tracks per album/artist and so on, which means that collaborative playlists are sparser vs non-collaborative (Figure 4).
 ```
@@ -305,6 +309,7 @@ for i in range(len(ls_avg)):
     sns.violinplot(x='collaborative', y=ls_avg[i], data=df, inner='box', widht=2, ax=ax[i])
 ```
 ![png](olives-eda_files/figure3.png)
+*Figure 3*
 ```
 fig, ax = plt.subplots(2, 3, figsize=(20,10))
 for i in range(len(ls)):
@@ -314,6 +319,7 @@ for i in range(len(ls)):
         sns.violinplot(x='collaborative', y=ls[i], data=df, inner='box', ax=ax[1, i-3])
 ```
 ![png](olives-eda_files/figure4.png)
+*Figure 4*
 
 In Figure 5 & 6 we try to hone in further on certain relationships we saw in the previous scatter plot matrix by creating a ‘kdeplot’. We can see that valence and danceability are strongly correlated as well.
 
@@ -344,6 +350,7 @@ sns.kdeplot(df_tracks_unique['danceability'], df_tracks_unique['valence'], cmap=
 sns.kdeplot(df_tracks_unique['danceability'], df_tracks_unique['energy'], cmap=cmap, shade=True, ax=ax[3])
 ```
 ![png](olives-eda_files/figure5.png)
+*Figure 5*
 
 ```
 fig, ax = plt.subplots(1, 4, figsize=(20,5))
@@ -353,3 +360,4 @@ sns.kdeplot(df_tracks_unique['danceability'], df_tracks_unique['popularity'], cm
 sns.kdeplot(df_tracks_unique['valence'], df_tracks_unique['popularity'], cmap=cmap, shade=True, ax=ax[3])
 ```
 ![png](olives-eda_files/figure6.png)
+*Figure 6*
